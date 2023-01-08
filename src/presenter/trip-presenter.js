@@ -1,4 +1,4 @@
-import {render} from '../render.js';
+import { render } from '../render.js';
 import PointEditView from '../view/point-edit-view.js';
 import FilterView from '../view/filter-view.js';
 import PointView from '../view/point-view.js';
