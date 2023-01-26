@@ -4,24 +4,26 @@ import FilterView from '../view/filter-view.js';
 import PointView from '../view/point-view.js';
 import SortView from '../view/sort-view.js';
 import PointListView from '../view/point-list-view.js';
-import { POINT_LIST_RENDER_COUNT } from '../const.js';
 
 export default class TripPresenter {
   pointListView = new PointListView();
 
-  constructor({filterContainer, siteMainContainer}) {
+  constructor ({ filterContainer, siteMainContainer, pointsModel }) {
     this.filterContainer = filterContainer;
     this.siteMainContainer = siteMainContainer;
+    this.pointsModel = pointsModel;
   }
 
-  init() {
-    render(new PointEditView(), this.pointListView.getElement());
+  init () {
+    this.points = [...this.pointsModel.getPoints()];
+
+    render(new PointEditView({ point: this.points[0] }), this.pointListView.getElement());
     render(new FilterView(), this.filterContainer);
     render(new SortView(), this.siteMainContainer);
     render(this.pointListView, this.siteMainContainer);
 
-    for (let i = 0; i < POINT_LIST_RENDER_COUNT; i++) {
-      render(new PointView(), this.pointListView.getElement());
+    for (let i = 1; i < this.points.length; i++) {
+      render(new PointView({ point: this.points[i] }), this.pointListView.getElement());
     }
   }
 }
